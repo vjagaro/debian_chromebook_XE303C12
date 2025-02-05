@@ -3,7 +3,7 @@ set -e
 if [ $# -eq 0 ]; then
 	distrib="trixie"
 elif [ $# -eq 1 ]; then
-	if [ "$1" != "bullseye" ] && [ "$1" != "bookworm" ] && [ "$1" != "trixie" ; then
+	if [ "$1" != "bullseye" ] && [ "$1" != "bookworm" ] && [ "$1" != "trixie" ]; then
 		echo "Only bullseye, bookworm or trixie are supported."
 		exit 1
 	fi
