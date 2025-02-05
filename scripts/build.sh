@@ -10,10 +10,12 @@ figlet "CPUs: $(nproc)"
 if [ "$VERSION_CODENAME" == "bullseye" ]; then
 	tar xJf /usr/src/linux-source-5.10.tar.xz
 	cd linux-source-5.10
-
 elif [ "$VERSION_CODENAME" == "bookworm" ]; then
 	tar xJf /usr/src/linux-source-6.1.tar.xz
 	cd linux-source-6.1
+elif [ "$VERSION_CODENAME" == "trixie" ]; then
+	tar xJf /usr/src/linux-source-6.12.tar.xz
+	cd linux-source-6.12
 else
 	echo "Unsupported"
 	exit 1
@@ -76,6 +78,17 @@ deb-src http://deb.debian.org/debian-security bookworm-security main contrib non
 
 deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
 deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+EOF
+elif [ "$VERSION_CODENAME" == "trixie" ]; then
+	cat <<EOF >debian_root/etc/apt/sources.list
+deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
+deb-src http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
+
+deb http://deb.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
+deb-src http://deb.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
+
+deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware
+deb-src http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware
 EOF
 else
 	echo "Unsupported"
@@ -160,7 +173,7 @@ apt-get -y dist-upgrade
 if [ "$VERSION_CODENAME" == "bullseye" ]; then
 	apt-get -y --no-install-recommends install firmware-realtek firmware-linux firmware-libertas firmware-samsung
 fi
-if [ "$VERSION_CODENAME" == "bookworm" ]; then
+if [ "$VERSION_CODENAME" == "bookworm" ] || [ "$VERSION_CODENAME" == "trixie" ]; then
 	cat /etc/apt/sources.list
 	apt-get -y --no-install-recommends install firmware-linux-nonfree firmware-linux-free firmware-realtek firmware-libertas firmware-samsung
 	# Downgrade cgpt (workaround bug
