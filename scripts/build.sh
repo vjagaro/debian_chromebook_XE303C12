@@ -48,7 +48,11 @@ make dtbs
 kver=$(make kernelrelease)
 export kver
 figlet "KVER: $kver"
-cp ./arch/arm/boot/dts/exynos5250*.dtb /
+if [ "$VERSION_CODENAME" == "trixie" ]; then
+  cp ./arch/arm/boot/dts/samsung/exynos5250*.dtb /
+else
+  cp ./arch/arm/boot/dts/exynos5250*.dtb /
+fi
 
 cd /
 
