@@ -8,7 +8,8 @@ CHROMEBOOK_HOSTNAME=chromebook
 
 cd build
 
-#sudo debootstrap --arch=armhf trixie rootfs http://deb.debian.org/debian/
+sudo rm -rf rootfs
+sudo debootstrap --arch=armhf trixie rootfs http://deb.debian.org/debian/
 
 sudo tee rootfs/etc/apt/sources.list.d/debian.sources >/dev/null <<EOF
 Types: deb deb-src
@@ -63,7 +64,8 @@ sudo tee rootfs/chromebook/setup.sh >/dev/null <<'EOF'
 
 set -euo pipefail
 
-export LANG=c
+export LANG=C
+export LC_ALL=C
 
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
@@ -77,7 +79,9 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   firmware-qcom-soc \
   firmware-realtek \
   firmware-samsung \
+  initramfs-tools \
   laptop-mode-tools \
+  network-manager \
   parted \
   util-linux \
   wget \
@@ -94,6 +98,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y /chromebook/linux-*.deb
 apt-get clean
+rm -f /var/lib/apt/lists/* || true
 
 echo "root:toor" | chpasswd
 EOF
@@ -214,6 +219,7 @@ touch xe303c12/xfce_install.sh
 mkdir -p ../release
 zip -r ../release/xe303c12.zip xe303c12
 
+# other programs?
 #  abootimg cgpt fake-hwclock u-boot-tools device-tree-compiler vboot-utils vboot-kernel-utils \
 #  initramfs-tools parted sudo xz-utils wpasupplicant  \
 #  locales-all ca-certificates initramfs-tools u-boot-tools locales \
