@@ -81,8 +81,11 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   firmware-samsung \
   initramfs-tools \
   laptop-mode-tools \
+  locales \
+  locales-all \
   network-manager \
   parted \
+  sudo \
   util-linux \
   wget \
   wpasupplicant
@@ -219,9 +222,6 @@ touch xe303c12/xfce_install.sh
 mkdir -p ../release
 zip -r ../release/xe303c12.zip xe303c12
 
-# other programs?
-#  abootimg cgpt fake-hwclock u-boot-tools device-tree-compiler vboot-utils vboot-kernel-utils \
-#  initramfs-tools parted sudo xz-utils wpasupplicant  \
-#  locales-all ca-certificates initramfs-tools u-boot-tools locales \
-#  console-common less network-manager git \
-#  alsa-utils pulseaudio python3 wget zstd \
+# TODO: should these be installed?
+#  abootimg fake-hwclock u-boot-tools device-tree-compiler vboot-utils vboot-kernel-utils
+#  xz-utils u-boot-tools console-common less git alsa-utils pulseaudio

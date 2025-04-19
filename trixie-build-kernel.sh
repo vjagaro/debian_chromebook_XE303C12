@@ -54,5 +54,3 @@ export CROSS_COMPILE=arm-linux-gnueabihf-
 make olddefconfig
 make bindeb-pkg "-j$(nproc)"
 make dtbs
-
-cp arch/arm/boot/dts/samsung/exynos5250*.dtb ..
